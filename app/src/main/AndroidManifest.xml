@@ -21,6 +21,11 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
+        <activity
+            android:name=".AddForm"
+            android:exported="false">
+        </activity>
     </application>
 
 </manifest>

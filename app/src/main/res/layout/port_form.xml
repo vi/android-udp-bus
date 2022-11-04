@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<TableLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/finishAdding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Port" />
+
+                <EditText
+                    android:id="@+id/port"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="1234" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bind IP" />
+
+                <EditText
+                    android:id="@+id/bindIp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="::" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sendto last N\nseen peers" />
+
+                <EditText
+                    android:id="@+id/sendtoLastN"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="1" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="forget them\nafter milliseconds" />
+
+                <EditText
+                    android:id="@+id/forgetMs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="number" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Switch
+                    android:id="@+id/sendtoSpecific"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="also send to a specific peer" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/sendtoPeerRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="sendto peer" />
+
+                <EditText
+                    android:id="@+id/specificPeer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="1.2.3.4:5678" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/allowBroadcastRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Switch
+                    android:id="@+id/allowBroadcast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Allow broadcast" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Switch
+                    android:id="@+id/multicastV4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Join multicast v4" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/mc4Row1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mc group 4" />
+
+                <EditText
+                    android:id="@+id/multicastGroup4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="224.0.0.0" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/mc4Row2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mc iface 4" />
+
+                <EditText
+                    android:id="@+id/multicastInterface4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="192.168.0.1" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/mc4Row3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mc ttl" />
+
+                <EditText
+                    android:id="@+id/multicastTtl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="number" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Switch
+                    android:id="@+id/multicastV6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="Join multicast v6" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/mc6Row1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mc group 6" />
+
+                <EditText
+                    android:id="@+id/multicastGroup6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="ff00::" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/mc6Row2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="mc iface 6" />
+
+                <EditText
+                    android:id="@+id/multicastInterface6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:text="0" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TTL" />
+
+                <EditText
+                    android:id="@+id/ttl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:ems="10"
+                    android:inputType="number" />
+        </TableRow>
+
+</TableLayout>
+</ScrollView>
