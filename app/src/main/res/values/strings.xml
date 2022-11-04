@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">UDP Bus</string>
+    <string name="service_desc">UDP Bus is running</string>
     <string-array name="send_modes">
         <item>to the last peer[s]</item>
         <item>to specific peer[s]</item>

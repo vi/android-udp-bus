@@ -22,68 +22,28 @@
             android:text="Add port" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/start"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Start" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/stop"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Stop" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/save"
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="?android:attr/buttonBarStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button8"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/button7"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/button5"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/button6"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Button" />
+            android:text="Save" />
 
     </LinearLayout>
 
@@ -111,28 +71,26 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="0.2" />
 
             <TextView
                 android:id="@+id/configStatus"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
-                android:background="#D5D5D5"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
                 android:fontFamily="monospace"
                 android:text="..." />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="0.5" />
 
             <EditText
                 android:id="@+id/statusViewer"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5"
-                android:background="#DEDEDE"
                 android:editable="false"
                 android:ems="10"
                 android:fontFamily="monospace"
