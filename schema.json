@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "array",
+  "items": [ {
+      "type": "array",
+      "items": [ {
+          "type": "object",
+          "properties": {
+            "port": { "type": "integer", "description":"Port to bind to" },
+            "ip": { "type": "string", "description":"IPv4 or IPv6 to bind this port to" },
+            "last_n": { "type": "integer", "description":"How many distinct socket addresses from recvfrom to remember and send (broadcast) packets to, including from this very port. Can be 0." },
+            "forget_ms": { "type": "integer", "description":"For how many milliseconds keep those `last_n` socket addresses around." },
+            "sendto": { 
+              "description": "List of static socket addresses to send packets to.",
+              "type": "array", "items":
+              [
+                { "type": "string" }
+              ]
+            },
+            "broadcast": { "type": "boolean", "description":"Set SO_BROADCAST for `sendto` addresses" },
+            "multicast_addr": { "type": "string", "description":"Join this IPv4 multicast group. Also requires `multicast_ifaddr` IP address. Does not automatically imply `sendto` membership."},
+            "multicast_ifaddr": { "type": "string", "description":"IP address of network interface to join multicast group." },
+            "multicast_ttl": { "type": "integer", "description":"Override TTL for outgoing multicast datagrams, if the address is in `sendto`" },
+            "multicast6_addr": { "type": "string", "description":"Join this IPv6 multicast group." },
+            "multicast6_ifindex": { "type": "integer", "description":"Specify network interface index instead of default 0." },
+            "ttl": { "type": "integer", "description":"Set TTL for outgoing datagrams" }
+          },
+          "required": [
+            "port",
+            "ip",
+            "last_n"
+          ]
+      } ]
+  } ]
+}

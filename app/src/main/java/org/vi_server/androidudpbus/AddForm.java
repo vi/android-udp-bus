@@ -114,13 +114,13 @@ public class AddForm extends Activity {
         }
         {
             Switch b = findViewById(R.id.sendtoSpecific);
-            JSONArray a = new JSONArray();
             if (b.isChecked()) {
+                JSONArray a = new JSONArray();
                 EditText t = findViewById(R.id.specificPeer);
                 String s = t.getText().toString();
                 a.put(s);
+                o.put("sendto", a);
             }
-            o.put("sendto", a);
         }
         {
             Switch b = findViewById(R.id.allowBroadcast);
