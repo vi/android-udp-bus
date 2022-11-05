@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
                 h.post(new Runnable() {
                     @Override
                     public void run() {
-                        EditText t = findViewById(R.id.statusViewer);
+                        TextView t = findViewById(R.id.statusViewer);
                         t.setText(ss);
                     }
                 });

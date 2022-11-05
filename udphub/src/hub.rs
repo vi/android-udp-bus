@@ -296,6 +296,7 @@ impl PortTask {
                                 peers.extend(x.peek_iter().map(|x|(*x.0, SockAddrType::Transient, x.1.clone())));
                             }
                         }
+                        
                         let _ = stats_tx.send(ReportStats {
                             peers : peers.into_boxed_slice(),
                             port_wide: stats.clone(),

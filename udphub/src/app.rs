@@ -141,13 +141,16 @@ impl AppImpl {
                                     buf.push_str(&format!("port {}\n", portaddr));
                                     
                                     let (tx,rx) = oneshot::channel();
-                                    let _ = pq.send((GetStatsMode::Short, tx)).await;
+                                    let _ = pq.send((GetStatsMode::Long, tx)).await;
                                     if let Ok(mut ps) = rx.await {
                                         let w = ps.port_wide;
                                         buf.push_str(&format!("  recv {} ({} dgrams)\n", format_size(w.recv_bytes, &bytes_formatter), w.recv_dgrams));
                                         buf.push_str(&format!("  sent {} ({} dgrams)\n", format_size(w.send_bytes, &bytes_formatter), w.send_dgrams));
                                         if w.lagged > 0 || w.send_errors > 0 || w.recv_errors > 0 {
                                             buf.push_str(&format!("  lagged {} senderrs {} recverrs {}\n", w.lagged, w.send_errors, w.recv_errors));
+                                        }
+                                        if w.dgrams_to_nowhere > 0 {
+                                            buf.push_str(&format!("  datagrams to nowhere {}\n", w.dgrams_to_nowhere));
                                         }
                                         ps.peers.sort_by_key(|x|(x.1,x.0));
                                         for (pa, pt, ps) in &ps.peers[..] {
@@ -158,7 +161,7 @@ impl AppImpl {
                                             buf.push_str(&format!("  peer {} {}\n", pt, pa));
                                             let joined_ago = now.duration_since(ps.begin);
                                             let recv_ago = now.duration_since(ps.last_recv); 
-                                            buf.push_str(&format!("    joined {}, last recv {}\n",ta.convert(joined_ago), ta.convert(recv_ago)));
+                                            buf.push_str(&format!("    joined {}\n    last seen {}\n",ta.convert(joined_ago), ta.convert(recv_ago)));
                                             buf.push_str(&format!("    recv {} ({} dgrams)", format_size(ps.recv_bytes, &bytes_formatter), ps.recv_dgrams));
                                             
                                             let tm = now.duration_since(ps.saved_recv_counter_ts1);
@@ -179,7 +182,7 @@ impl AppImpl {
                                             buf.push_str("\n");
                                             
                                             let (b, d) = (ps.send_bytes.load(Relaxed),ps.send_dgrams.load(Relaxed));
-                                            buf.push_str(&format!("    sent {} ({} dgrams)", format_size(b, &bytes_formatter), d));
+                                            buf.push_str(&format!("    sent {} ({} dgrams)\n", format_size(b, &bytes_formatter), d));
                                         }
                                     }
                                 }
