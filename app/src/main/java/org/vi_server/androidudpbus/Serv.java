@@ -68,16 +68,10 @@ public class Serv extends Service {
         boolean failed = false;
 
         synchronized (instance) {
-            Native.configure(instance.self, config);
+            Native.start(instance.self, config);
             startupError = Native.getError(instance.self);
             if (startupError != null) {
                 failed = true;
-            } else {
-                Native.start(instance.self);
-                startupError = Native.getError(instance.self);
-                if (startupError != null) {
-                    failed = true;
-                }
             }
 
             if (failed) {
