@@ -28,7 +28,6 @@
           "required": [
             "port",
             "ip",
-            "last_n"
           ]
       } ]
   } ]

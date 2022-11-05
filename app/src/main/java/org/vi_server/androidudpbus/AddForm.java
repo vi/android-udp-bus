@@ -84,6 +84,20 @@ public class AddForm extends Activity {
                 }
             });
         }
+
+        {
+            Switch b = findViewById(R.id.reply);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Switch b = findViewById(R.id.reply);
+                    TableRow r1 = findViewById(R.id.replyRow1);
+                    r1.setVisibility(b.isChecked() ? View.VISIBLE : View.GONE);
+                    TableRow r2 = findViewById(R.id.replyRow2);
+                    r2.setVisibility(b.isChecked() ? View.VISIBLE : View.GONE);
+                }
+            });
+        }
     }
 
     protected String getJson() throws JSONException  {
@@ -97,19 +111,24 @@ public class AddForm extends Activity {
             o.put("ip", t.getText().toString());
         }
         {
-            EditText t = findViewById(R.id.sendtoLastN);
-            String s = t.getText().toString();
-            int n = 0;
-            if (!s.isEmpty()) {
-                n = Integer.decode(s);
-            }
-            o.put("last_n", n);
-        }
-        {
-            EditText t = findViewById(R.id.forgetMs);
-            String s = t.getText().toString();
-            if (!s.isEmpty()) {
-                o.put("forget_ms", Integer.decode(t.getText().toString()));
+            Switch b = findViewById(R.id.reply);
+            if (b.isChecked()) {
+                {
+                    EditText t = findViewById(R.id.sendtoLastN);
+                    String s = t.getText().toString();
+                    int n = 1;
+                    if (!s.isEmpty()) {
+                        n = Integer.decode(s);
+                    }
+                    o.put("last_n", n);
+                }
+                {
+                    EditText t = findViewById(R.id.forgetMs);
+                    String s = t.getText().toString();
+                    if (!s.isEmpty()) {
+                        o.put("forget_ms", Integer.decode(t.getText().toString()));
+                    }
+                }
             }
         }
         {

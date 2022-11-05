@@ -153,26 +153,27 @@ public class MainActivity extends Activity {
         if (data != null) {
             String s = data.getStringExtra("t");
             JSONArray a;
-            if (!t.getText().toString().isEmpty()) {
-                try {
-                    a = new JSONArray((t.getText().toString()));
+            String c = t.getText().toString();
+            if (c.trim().isEmpty()) {
+                c = "[[]]";
+            }
+            try {
+                a = new JSONArray(c);
 
-                    if (a.length() == 0) {
-                        a.put(new JSONArray());
-                    }
-                    JSONArray aa = (JSONArray) a.get(0);
-
-                    JSONObject o = new JSONObject(s);
-                    aa.put(o);
-                    t.setText(a.toString(2));
-                } catch (Exception e) {
-                    TextView v = findViewById(R.id.configStatus);
-                    v.setText(e.toString());
-
-                    t.append("\n");
-                    t.append(s);
-                    return;
+                if (a.length() == 0) {
+                    a.put(new JSONArray());
                 }
+                JSONArray aa = (JSONArray) a.get(0);
+
+                JSONObject o = new JSONObject(s);
+                aa.put(o);
+                t.setText(a.toString(2));
+            } catch (Exception e) {
+                TextView v = findViewById(R.id.configStatus);
+                v.setText(e.toString());
+
+                t.append("\n");
+                t.append(s);
             }
         }
     }

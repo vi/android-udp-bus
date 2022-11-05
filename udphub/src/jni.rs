@@ -5,6 +5,8 @@ use jni::sys::jstring;
 use jni::JNIEnv;
 use std::ptr::null_mut;
 
+use crate::config::Config;
+
 #[no_mangle]
 pub extern "system" fn Java_org_vi_1server_androidudpbus_Native_checkConfig(
     env: JNIEnv,
@@ -16,14 +18,15 @@ pub extern "system" fn Java_org_vi_1server_androidudpbus_Native_checkConfig(
         .expect("Couldn't get java string!")
         .into();
 
-    if input.starts_with('[') {
-        return null_mut();
+    match serde_json::from_slice::<Config>(input.as_bytes()) {
+        Ok(_) => null_mut(),
+        Err(e) => {
+            let output = env
+                .new_string(format!("{}", e))
+                .expect("Couldn't create java string!");
+            output.into_raw()
+        }
     }
-    let output = env
-        .new_string(format!("Hello, {}!", input))
-        .expect("Couldn't create java string!");
-
-    output.into_raw()
 }
 
 #[no_mangle]
