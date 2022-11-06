@@ -18,11 +18,8 @@ pub struct  Port {
     pub multicast6_addr: Option<Ipv6Addr>,
     pub multicast6_ifindex: Option<u32>,
     pub ttl: Option<u32>,
-    // todo
     pub sender_period_ms: Option<u64>,
-    // todo
     pub sender_data_base64: Option<String>,
-    // todo
     pub norecv : Option<bool>,
     pub sndbuf: Option<usize>,
     pub rcvbuf: Option<usize>,

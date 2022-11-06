@@ -29,6 +29,8 @@ pub struct PortTask {
     quit: CancellationToken,
     send_addrs: Option<Box<[(SocketAddr, EntryStats)]>>,
     stats_requests: StatsRequestReceiver,
+    recv_enabled: bool,
+    periodic_data: Option<(Bytes, tokio::time::Interval)>,
 }
 
 impl Hub {
@@ -57,6 +59,16 @@ impl Hub {
             });
             let (stats_requests_tx, stats_requests) = mpsc::channel(1);
             port_stats_queriers.push((sa, stats_requests_tx));
+            let periodic_data = if let Some(ms) = sc.sender_period_ms {
+                let b = if let Some(base64) = &sc.sender_data_base64 {
+                    Bytes::from(base64::decode(base64)?)
+                } else {
+                    Bytes::new()
+                };
+                Some((b, tokio::time::interval(Duration::from_millis(ms))))
+            } else {
+                None
+            };
             let task = PortTask {
                 socket: s,
                 lru,
@@ -65,6 +77,8 @@ impl Hub {
                 quit: quit.clone(),
                 send_addrs,
                 stats_requests,
+                recv_enabled: sc.norecv != Some(true),
+                periodic_data,
             };
             rt.spawn(task.start());
         }
@@ -172,7 +186,7 @@ impl PortTask {
                 _cancelled = self.quit.cancelled() => {
                     break;
                 }
-                ret = self.socket.recv_from(&mut buf[..]) => {
+                ret = self.socket.recv_from(&mut buf[..]), if self.recv_enabled => {
                     match ret {
                         Ok((n, from)) => {
                             let now = Instant::now();
@@ -270,6 +284,24 @@ impl PortTask {
                                             }
                                         }
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+                _tick = self.periodic_data.as_mut().unwrap().1.tick(), if self.periodic_data.is_some() => {
+                    let b = self.periodic_data.as_ref().unwrap().0.clone();
+                    if let Some(addrs) = &mut self.send_addrs {
+                        for (sa,es) in &mut addrs[..] {
+                            match self.socket.send_to(&b[..], *sa).await {
+                                Ok(m) => {
+                                    stats.send_bytes+=m as u64;
+                                    stats.send_dgrams+=1;
+                                    es.send_bytes.fetch_add(m as u64, Relaxed);
+                                    es.send_dgrams.fetch_add(1, Relaxed);
+                                }
+                                Err(_) => {
+                                    stats.send_errors+=1;
                                 }
                             }
                         }

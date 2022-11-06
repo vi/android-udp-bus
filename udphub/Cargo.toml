@@ -10,6 +10,7 @@ crate_type = ["cdylib"]
 
 [dependencies]
 anyhow = "1.0.66"
+base64 = "0.13.1"
 #arc-swap = "1.5.1"
 bytes = "1.2.1"
 humansize = "2.1.0"
