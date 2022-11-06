@@ -137,6 +137,9 @@ impl AppImpl {
                                 if hubs.len() != 1 {
                                     buf.push_str(&format!("* Hub {} *\n", hub_n+1));
                                 }
+                                if h.port_stats_queriers.is_empty() {
+                                    buf.push_str("No ports\n");
+                                } 
                                 for (portaddr, pq) in &h.port_stats_queriers[..] {
                                     buf.push_str(&format!("port {}\n", portaddr));
                                     
