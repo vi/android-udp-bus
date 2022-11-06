@@ -23,7 +23,6 @@ The application does not send datagrams back to sender.
 
 * UI is not user-friendly.
 * Not all features are exposed in GUI - you may want to add some undocumented fields to the JSON manually.
-* IPv6 may crash on old devices
 * Not very optimised for speed or latency. It may be slightly slower than `socat udp4-l udp`.
 * Not everything is tested yet
 * Documentation is lacking
