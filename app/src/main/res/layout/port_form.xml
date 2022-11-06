@@ -62,7 +62,7 @@
                             android:layout_height="48dp"
                             android:ems="10"
                             android:inputType="textPersonName"
-                            android:text="::" />
+                            android:text="0.0.0.0" />
                 </TableRow>
 
                 <TableRow
