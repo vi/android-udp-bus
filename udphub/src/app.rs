@@ -187,6 +187,8 @@ impl AppImpl {
                                             let (b, d) = (ps.send_bytes.load(Relaxed),ps.send_dgrams.load(Relaxed));
                                             buf.push_str(&format!("    sent {} ({} dgrams)\n", format_size(b, &bytes_formatter), d));
                                         }
+                                    } else {
+                                        buf.push_str("  failed\n");
                                     }
                                 }
                             }

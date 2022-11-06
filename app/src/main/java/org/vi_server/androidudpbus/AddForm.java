@@ -98,6 +98,22 @@ public class AddForm extends Activity {
                 }
             });
         }
+
+        {
+            Switch b = findViewById(R.id.perfOpts);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Switch b = findViewById(R.id.perfOpts);
+                    TableRow r1 = findViewById(R.id.perfRow1);
+                    r1.setVisibility(b.isChecked() ? View.VISIBLE : View.GONE);
+                    TableRow r2 = findViewById(R.id.perfRow2);
+                    r2.setVisibility(b.isChecked() ? View.VISIBLE : View.GONE);
+                    TableRow r3 = findViewById(R.id.perfRow3);
+                    r3.setVisibility(b.isChecked() ? View.VISIBLE : View.GONE);
+                }
+            });
+        }
     }
 
     protected String getJson() throws JSONException  {
@@ -183,6 +199,23 @@ public class AddForm extends Activity {
             String s = t.getText().toString();
             if (!s.isEmpty()) {
                 o.put("ttl",Integer.decode(s));
+            }
+        }
+        {
+            Switch b = findViewById(R.id.perfOpts);
+            if (b.isChecked()) {
+
+                EditText t = findViewById(R.id.sndBuf);
+                String s = t.getText().toString();
+                o.put("sndbuf",Integer.decode(s));
+
+                EditText t2 = findViewById(R.id.rcvBuf);
+                String s2 = t2.getText().toString();
+                o.put("rcvbuf",Integer.decode(s2));
+
+                EditText t3 = findViewById(R.id.qlen);
+                String s3 = t2.getText().toString();
+                o.put("qlen",Integer.decode(s2));
             }
         }
         return o.toString();

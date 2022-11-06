@@ -141,6 +141,7 @@ public class Serv extends Service {
         }
         if (wl != null) {
             wl.release();
+            wl = null;
         }
         super.onDestroy();
     }

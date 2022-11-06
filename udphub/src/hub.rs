@@ -37,7 +37,20 @@ impl Hub {
     pub fn start(c: &[config::Port], quit: CancellationToken, rt: &Runtime) -> anyhow::Result<Hub> {
         // let mut sockets = Vec::with_capacity(c.len());
         let mut port_stats_queriers = Vec::with_capacity(c.len());
-        let (tx, _rx) = broadcast::channel(2);
+        let mut qlen = None;
+        for sc in c {
+            if let Some(ql) = sc.qlen {
+                if qlen.is_some() && Some(ql) != qlen {
+                    anyhow::bail!("Only one qlen setting per hub is allowed");
+                }
+                if ql < 1 {
+                    anyhow::bail!("Invalid qlen setting");
+                }
+                qlen = Some(ql);
+            }
+        }
+        let qlen = qlen.unwrap_or(16);
+        let (tx, _rx) = broadcast::channel(qlen);
         for sc in c {
             let sa = SocketAddr::new(sc.ip, sc.port);
             let s = udp_from_config(sc)?;
@@ -289,7 +302,7 @@ impl PortTask {
                         }
                     }
                 }
-                _tick = self.periodic_data.as_mut().unwrap().1.tick(), if self.periodic_data.is_some() => {
+                _tick = async { self.periodic_data.as_mut().unwrap().1.tick().await }, if self.periodic_data.is_some() => {
                     let b = self.periodic_data.as_ref().unwrap().0.clone();
                     if let Some(addrs) = &mut self.send_addrs {
                         for (sa,es) in &mut addrs[..] {

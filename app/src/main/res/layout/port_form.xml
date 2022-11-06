@@ -339,6 +339,87 @@
 
                 <TableRow
                     android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                        <Space
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <Switch
+                            android:id="@+id/perfOpts"
+                            android:layout_width="wrap_content"
+                            android:layout_height="48dp"
+                            android:text="Performance options" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/perfRow1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/textView8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@id/sndBuf"
+                            android:text="SO_SNDBUF" />
+
+                        <EditText
+                            android:id="@+id/sndBuf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:text="1000000" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/perfRow2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/textView9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@id/rcvBuf"
+                            android:text="SO_RCVBUF" />
+
+                        <EditText
+                            android:id="@+id/rcvBuf"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:text="1000000" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/perfRow3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/textView14"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:labelFor="@id/qlen"
+                            android:text="qlen" />
+
+                        <EditText
+                            android:id="@+id/qlen"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ems="10"
+                            android:inputType="number"
+                            android:text="1000" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                         <Space

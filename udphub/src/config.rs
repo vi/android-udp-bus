@@ -28,4 +28,5 @@ pub struct  Port {
     pub v6only: Option<bool>,
     pub v6_multicast_hops: Option<u32>,
     pub v6_unicast_hops: Option<u32>,
+    pub qlen: Option<usize>,
 }
