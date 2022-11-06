@@ -39,4 +39,5 @@ cargo {
     libname = "udphub"
     targets = ["arm", "arm64"]
     apiLevel = 21
+    profile = "release"
 }

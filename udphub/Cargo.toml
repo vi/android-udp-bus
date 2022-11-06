@@ -22,3 +22,14 @@ socket2 = "0.4.7"
 timeago = { version = "0.3.1", default-features = false }
 tokio = { version = "1.21.2", features = ["rt", "net", "time", "sync", "macros", "rt-multi-thread"] }
 tokio-util = "0.7.4"
+
+[profile.release]
+opt-level = "s"
+debug = 0
+strip = true
+rpath = false
+lto = true
+debug-assertions = false
+codegen-units = 1
+incremental = false
+panic = 'abort'
