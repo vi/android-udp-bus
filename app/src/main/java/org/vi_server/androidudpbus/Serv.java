@@ -77,8 +77,6 @@ public class Serv extends Service {
             if (failed) {
                 Native.delete(instance.self);
                 instance.self = 0;
-                this.stopForeground(true);
-                return super.onStartCommand(intent, flags, startId);
             }
         }
 
@@ -91,9 +89,18 @@ public class Serv extends Service {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             nb.setChannelId(CHANNEL_DEFAULT_IMPORTANCE);
         }
+        if (failed) {
+            nb.setContentText("Failed to start service");
+        }
         Notification notification = nb.build();
 
         startForeground(ONGOING_NOTIFICATION_ID, notification);
+
+        if (failed) {
+            this.stopForeground(true);
+            this.stopSelf();
+            return super.onStartCommand(intent, flags, startId);
+        }
 
         PowerManager pm = (PowerManager)this.getSystemService(
                 Context.POWER_SERVICE);
@@ -122,8 +129,10 @@ public class Serv extends Service {
 
     @Override
     public void onDestroy() {
-        timer.cancel();
-        timer = null;
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
         synchronized (instance) {
             if (instance.self != 0) {
                 Native.delete(instance.self);
