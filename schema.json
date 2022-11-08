@@ -1,34 +1,222 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Array_of_Array_of_Port",
   "type": "array",
-  "items": [ {
-      "type": "array",
-      "items": [ {
-          "type": "object",
-          "properties": {
-            "port": { "type": "integer", "description":"Port to bind to" },
-            "ip": { "type": "string", "description":"IPv4 or IPv6 to bind this port to" },
-            "last_n": { "type": "integer", "description":"How many distinct socket addresses from recvfrom to remember and send (broadcast) packets to, including from this very port. Can be 0." },
-            "forget_ms": { "type": "integer", "description":"For how many milliseconds keep those `last_n` socket addresses around." },
-            "sendto": { 
-              "description": "List of static socket addresses to send packets to.",
-              "type": "array", "items":
-              [
-                { "type": "string" }
-              ]
-            },
-            "broadcast": { "type": "boolean", "description":"Set SO_BROADCAST for `sendto` addresses" },
-            "multicast_addr": { "type": "string", "description":"Join this IPv4 multicast group. Also requires `multicast_ifaddr` IP address. Does not automatically imply `sendto` membership."},
-            "multicast_ifaddr": { "type": "string", "description":"IP address of network interface to join multicast group." },
-            "multicast_ttl": { "type": "integer", "description":"Override TTL for outgoing multicast datagrams, if the address is in `sendto`" },
-            "multicast6_addr": { "type": "string", "description":"Join this IPv6 multicast group." },
-            "multicast6_ifindex": { "type": "integer", "description":"Specify network interface index instead of default 0." },
-            "ttl": { "type": "integer", "description":"Set TTL for outgoing datagrams" }
-          },
-          "required": [
-            "port",
-            "ip",
+  "items": {
+    "type": "array",
+    "items": {
+      "$ref": "#/definitions/Port"
+    }
+  },
+  "definitions": {
+    "Port": {
+      "description": "Configuration of a specific bound UDP port in a hub. Data received on any port of the hub would be transferred to all other clients (on that port and on other ports of the hub) of the hub, except of sender. Config file is array of array of these objects, i.e. collection of hubs, each having a collection of ports.",
+      "type": "object",
+      "required": [
+        "ip",
+        "port"
+      ],
+      "properties": {
+        "broadcast": {
+          "description": "Set `SO_BROADCAST` to this value",
+          "type": [
+            "boolean",
+            "null"
           ]
-      } ]
-  } ]
+        },
+        "forget_ms": {
+          "description": "If set, forget discovered peers after this amount of milliseconds. If unset, they are remembered forever, or until some newer peer evicts the most long unseen peer.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "ip": {
+          "description": "IP address to bind this port to. Can be IPv4 or IPv6.",
+          "type": "string",
+          "format": "ip"
+        },
+        "last_n": {
+          "description": "Number of recently seen (recvfrom-ed) peers to remember, besides the `sendto` list which are permanently kept track of. If 0, no peers are added to the list (but their incoming packets are still forwarded to the hub, unless `norecv` is set). Datagrams seen by the hub are sent to the peers in the list. Disovered peers are marked with `T` (transient) in stats.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint",
+          "minimum": 0.0
+        },
+        "multicast6_addr": {
+          "description": "Join this IPv6 multicast group. Requires `multicast6_ifindex`.",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "ipv6"
+        },
+        "multicast6_ifindex": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "multicast_addr": {
+          "description": "Join this IPv4 multicast group. Requires specification of interface, either by IP (`multicast_ifaddr`) or by index (`multicast_ifindex`).",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "ipv4"
+        },
+        "multicast_ifaddr": {
+          "description": "IP of the network interface to join multicast",
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "ipv4"
+        },
+        "multicast_ifindex": {
+          "description": "Index of the network interface to join multicast",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "multicast_ttl": {
+          "description": "Set specific TTL value for the outgoing IPv4 multicast datagrams (IP_MULTICAST_TTL), instead of usual 1.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "norecv": {
+          "description": "Don't call `recvmsg` on this port. Renders `last_n` useless.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "port": {
+          "description": "Port to bind this port to. From 1 to 65535",
+          "type": "integer",
+          "format": "uint16",
+          "minimum": 0.0
+        },
+        "qlen": {
+          "description": "Queue length of this hub (not a port-specific option). Default is 16. This for internal in-app queue, not qlen of the network interface. Can be set only on one port of the hub (or set to the same value for all ports). Too small value may lead to dropped (`lagged`) datagrams, too large value may lead to buffer bloat.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint",
+          "minimum": 0.0
+        },
+        "rcvbuf": {
+          "description": "Set socket receive buffer size (SO_RCVBUF).",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint",
+          "minimum": 0.0
+        },
+        "sender_data_base64": {
+          "description": "Content of the datagram for `sender_period_ms`, base64-encoded.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sender_period_ms": {
+          "description": "Periodically send specified data buffer to addresses specified in `sendto` field (not to the hub itself). By default it sends a zero-length datagram",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "sendto": {
+          "description": "List of permanent (`P`) socket addresses to send packets to.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "sndbuf": {
+          "description": "Set socket send buffer size (SO_SNDBUF).",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint",
+          "minimum": 0.0
+        },
+        "tos": {
+          "description": "Set IP_TOS. There is currently no IPv4 analogue.",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "ttl": {
+          "description": "Set IP_TTL",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "v6_multicast_hops": {
+          "description": "Set IPV6_MULTICAST_HOPS",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "v6_unicast_hops": {
+          "description": "Set IPV6_UNICAST_HOPS",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint32",
+          "minimum": 0.0
+        },
+        "v6only": {
+          "description": "Set IPV6_V6ONLY before binding the socket",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "write_timeout_ms": {
+          "description": "Set SO_SNDTIMEO",
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
 }
