@@ -4,7 +4,15 @@ Android application to create UDP forwarders, hubs and other tools. To aid build
 
 ![First screenshot](screenshot1.png) ![Second screenshot](screenshot2.png)
 
-Build it using `./gradlew cargoBuild && ./gradlew assembleDebug` or just download apk from [Github Releases](https://github.com/vi/android-udp-bus/releases/).
+Build it using `./gradlew cargoBuild && ./gradlew assembleDebug`.
+
+# Download
+
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
+     alt="Get it on F-Droid"
+     height="80">](https://f-droid.org/packages/org.vi_server.androidudpbus/)
+
+or get the APK from the [Releases Section](https://github.com/vi/android-udp-bus/releases/latest).
 
 # Features
 
